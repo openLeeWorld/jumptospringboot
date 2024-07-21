@@ -20,7 +20,9 @@ import com.mysite.sbb.user.UserService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequestMapping("/question") // URL prefix
 @RequiredArgsConstructor
 @Controller
@@ -37,6 +39,7 @@ public class QuestionController {
 		// 매개변수로 Model을 지정하면 객체가 스프링부트에 의해 자동으로 생성됨
 		// Model 객체에 값을 담아두면 템플릿에서 그 값을 사용
 		// 검색어가 입력되지 않을 경우 kw이 null이 되는 것을 방지하기 위해 빈 문자열이 기본
+		log.info("page:{}, kw:{}", page, kw);
 		Page<Question> paging = this.questionService.getList(page, kw);
 		model.addAttribute("paging", paging);
 		model.addAttribute("kw", kw);
