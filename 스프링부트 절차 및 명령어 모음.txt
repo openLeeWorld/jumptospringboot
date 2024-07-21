@@ -1,0 +1,95 @@
+jdk 설치 -> sts(intellij) -> spring boot initializer or new spring starter project (dependencies: spring web)
+
+build.gradle > dependencies 추가)
+
+spring-boot-devtools(자동재시작)
+lombok(getter, setter, 메서드, 생성자 자동 생성)  
+h2 (DB) -> application.properties 추가
+JPA (ORM) -> application.properties 추가 (import jakarta.persistence.*)
+# jpa에서 hibernate구현체를 사용함. hibernate의 sql을 사용함 -> h2 반영
+# 엔티티를 기준으로 DDL 및 테이블을 생성하는 규칙 (update: 변경된 부분만 DB 적용)
+# none, update, validate, create, create-drop 등이 있음
+
+JpaRepository(interface 상속)
+Junit # testRuntimeOnly: 해당 라이브러리가 테스트 실행 시에만 사용됨을 의미함
+Thymeleaf (템플릿 엔진)
+SpringBootValidation(폼 클래스를 사용한 사용자로부터의 입력값 검증)
+
+cf)
+@Size	문자 길이를 제한한다.
+@NotNull	Null을 허용하지 않는다.
+@NotEmpty	Null 또는 빈 문자열("")을 허용하지 않는다.
+@Past	과거 날짜만 입력할 수 있다.
+@Future	미래 날짜만 입력할 수 있다.
+@FutureOrPresent	미래 또는 오늘 날짜만 입력할 수 있다.
+@Max	최댓값 이하의 값만 입력할 수 있도록 제한한다.
+@Min	최솟값 이상의 값만 입력할 수 있도록 제한한다.
+@Pattern	입력값을 정규식 패턴으로 검증한다
+
+paging 구현
+(GET방식에서 값을 전달하기 위해(?page=) ?와 &를 사용)
+
+cf)
+paging.isEmpty	페이지 존재 여부를 의미한다(게시물이 있으면 false, 없으면 true).
+paging.totalElements	전체 게시물 개수를 의미한다.
+paging.totalPages	전체 페이지 개수를 의미한다.
+paging.size	페이지당 보여 줄 게시물 개수를 의미한다.
+paging.number	현재 페이지 번호를 의미한다.
+paging.hasPrevious	이전 페이지의 존재 여부를 의미한다.
+paging.hasNext	다음 페이지의 존재 여부를 의미한다.
+
+springsecurity -> 인증, 인가, 권한
+- 스프링 시큐리티는 CSRF 방어 기능이 있어 csrf 토큰을 세션을 통해 발행하고, 웹 페이지에서는 폼 전송 시에 해당 토큰을 함께 전송하여 
+실제 웹 페이지에서 작성한 데이터가 전달되는지를 검증(없으면 403 Forbidden 에러)
+- H2 콘솔의 화면은 frame구조로 나뉘어 있는데, 스프링 시큐리티는 웹 사이트의 컨텐츠가 다른 사이트에 포함되지 않도록 하기 위해
+X-FRAME-Options의 헤더값을 DENY로 사용 (이유: 클릭재킹(의도와 다른 작업이 수행되도록 함) 차단) -> SAME-ORIGIN으로 변경
+
+commonmark(마크다운 문법 라이브러리, 스프링 부트 내부적으로 관리하지 않으므로 버전을 명시)
+
+검색 쿼리 예시)
+select
+    distinct q.id,
+    q.author_id,
+    q.content,
+    q.create_date,
+    q.modify_date,
+    q.subject 
+from question q 
+left outer join site_user u1 on q.author_id=u1.id 
+left outer join answer a on q.id=a.question_id 
+left outer join site_user u2 on a.author_id=u2.id 
+where
+    q.subject like '%스프링%' 
+    or q.content like '%스프링%' 
+    or u1.username like '%스프링%' 
+    or a.content like '%스프링%' 
+    or u2.username like '%스프링%' 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
